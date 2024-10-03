@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORM-VALIDATION</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      padding: 20px;
+    }
+
+    .search-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-container input {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .search-container input.error {
+      background-color: #ffe6e6;
+      border-color: red;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828843.png');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+    }
+
+    .search-container button {
+      width: 20%;
+      padding: 10px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .search-container button:hover {
+      background-color: #45a049;
+    }
+
+    
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input[type="text"], input[type="email"],input[type="date"],select,input[type="password"],input[type="file"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    select{
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    input[type="text"].success, input[type="email"].success ,input[type="date"].success,select,input[type="password"].success,input[type="file"].success{
+      border-color: green;
+      background-color: #e9fce9;
+    }
+
+    input[type="text"].error, input[type="email"].error ,input[type="password"].error,input[type="file"].error{
+      border-color: red;
+      background-color: #fce9e9;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .success-msg {
+      color: green;
+      font-size: 18px;
+      text-align: center;
+      display: none;
+    }
+
+    .table-container {
+      display: none;
+      margin: 20px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      background-color: white;
+      color: black;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- search -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search by username, days, or image size">
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <!-- Form -->
+  <div class="form-container">
+    <h2><U>VALIDATION FORM</U></h2>
+    <form id="signupForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name">
+      <span id="nameError" class="error-msg">Please enter a valid name (letters only)</span>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email">
+      <span id="emailError" class="error-msg">Please enter a valid email address</span>
+
+      <label for="phone">Contact</label>
+      <input type="text" id="phone" name="phone" placeholder="Your phone number">
+      <span id="phoneError" class="error-msg">Please enter a valid 10-digit phone number</span>
+
+      <label for="dob">DOB</label>
+      <input type="date" id="dob" name="dob" placeholder="Select Your DateOfBirth" min="1950-01-01" max="2010-12-31" required>
+      <span id="dobError" class="error-msg">Please select Date of Birth</span>
+
+
+      <label for="gen">Gender</label>
+      <select name="gen" id="gen" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="others">Others</option>
+      </select>
+      <!-- <span id="genError" class="error-msg">Please select Gender</span> -->
+  
+      <label for="edu">Education</label>
+      <select name="edu" id="edu" required>
+          <option value="BE">Bachelor of Engineering</option>
+          <option value="BTech">Bachelor of Technology</option>
+          <option value="BCA">Bachelor of Computer Application</option>
+          <option value="BSc">Bachelor of Science</option>
+          <option value="MCA">Master of Computer Application</option>
+          <option value="Msc">Master of Science</option>
+          <option value="MBA">Master of Business</option>
+      </select>
+
+      <label for="ocp">Occupation</label>
+      <!-- <span id="ocpspan" style="color: grey;">*optional</span> -->
+      <input type="text" id="ocp" name="ocp" placeholder="*Optional">
+
+      <label for="user">UserName</label>
+      <input type="text" id="user" name="user" placeholder="Enter your Username.">
+      <span id="userError" class="error-msg">UserName should be unique</span>
+
+      <label for="pass">Password</label>
+      <input type="password" id="pass" name="pass" placeholder="Enter your Password." required>
+      <span id="passError" class="error-msg">Please enter a Valid Password</span>
+
+      <label for="pan">PAN Number</label>
+      <input type="text" id="pan" name="pan" placeholder="Enter your PAN Number.">
+      <span id="panError" class="error-msg">Please enter a valid PAN Number</span>
+
+      <label for="img">Image</label>
+      <input type="file" id="img" name="img" accept="image/png,image/jpeg" placeholder="Upload an Image *(Within 2MB)" required>
+      <span id="imgError" class="error-msg">Upload image in a valid Format(png,jpeg)</span>
+
+      <button type="submit">Submit</button>
+      <button type="button" id="showDataBtn">Show Stored Data</button>
+
+      <p class="success-msg" id="successMsg">Form submitted successfully!</p>
+    </form>
+  </div>
+
+   <!-- Table -->
+   <div class="table-container" id="tableContainer">
+    <h3><u>DATA-TABLE</u></h3>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>DOB</th>
+          <th>Days</th>
+          <th>Gender</th>
+          <th>Education</th>
+          <th>Occupation</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>PAN</th>
+          <th>Image</th>
+          <th>Image size</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+    var id= 1;
+    let storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+    let isValid = true;
+
+      // Name validation (letters only)
+      const name = document.getElementById('name');
+      const nameError = document.getElementById('nameError');
+      name.onkeyup=function(){
+      const nameRegex = /^[A-Za-z\s]+$/;
+      if (!nameRegex.test(name.value.trim())) {
+        name.classList.add('error');
+        nameError.style.display = 'block';
+        isValid = false;
+      } else {
+        name.classList.remove('error');
+        name.classList.add('success');
+        nameError.style.display = 'none';
+      }
+    }
+
+    // Email validation
+    const email = document.getElementById('email');
+      const emailError = document.getElementById('emailError');
+
+      email.onkeyup=function(){
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value.trim())) {
+        email.classList.add('error');
+        emailError.style.display = 'block';
+        isValid = false;
+      } else {
+        email.classList.remove('error');
+        email.classList.add('success');
+        emailError.style.display = 'none';
+      }
+    }
+
+    // Phone validation (10 digits)
+    const phone = document.getElementById('phone');
+      const phoneError = document.getElementById('phoneError');
+      phone.onkeyup=function(){
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone.value.trim())) {
+        phone.classList.add('error');
+        phoneError.style.display = 'block';
+        isValid = false;
+      } else {
+        phone.classList.remove('error');
+        phone.classList.add('success');
+        phoneError.style.display = 'none';
+      }
+    }
+
+
+    // Username validation
+    const user = document.getElementById('user');
+      const userError = document.getElementById('userError');
+      user.onkeyup=function(){
+      if (storedData.some(entry => entry.user === user.value.trim())) {
+        user.classList.add('error');
+        userError.style.display = 'block';
+        isValid = false;
+      } else {
+        user.classList.remove('error');
+        user.classList.add('success');
+        userError.style.display = 'none';
+      }
+    }
+
+
+    // Password Checking
+    const pass = document.getElementById('pass');
+      const passError = document.getElementById('passError');
+
+      pass.onkeyup = function () {
+                let isPassValid = true;
+
+                // Check for uppercase letters
+                let uppercaseRegex = /[A-Z]/g;
+                if (!pass.value.match(uppercaseRegex)) {
+                  isPassValid = false;
+                }
+
+                // Check for lowercase letters
+                let lowercaseRegex = /[a-z]/g;
+                if (!pass.value.match(lowercaseRegex)) {
+                  isPassValid = false;
+                } 
+
+                // Check for numbers
+                let numbersRegex = /[0-9]/g;
+                if (!pass.value.match(numbersRegex)) {
+                  isPassValid = false;
+                }
+
+                // const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+                let spcRegex = /[!@#$%^&*]/;
+                if(!pass.value.match(spcRegex))
+                {
+                  isPassValid=false;
+                }
+
+
+                // Check for length (between 8 and 15 characters)
+                if (pass.value.length < 8 || pass.value.length > 15) {
+                  isPassValid = false;
+                }
+
+                // If any condition fails, show the error
+                if (!isPassValid) {
+                  pass.classList.add('error');
+                  pass.classList.remove('success');
+                  passError.style.display = 'block';
+                  isValid = false;  // Prevent form submission
+                } else {
+                  pass.classList.remove('error');
+                  pass.classList.add('success');
+                  passError.style.display = 'none';
+                  isValid = true;  // Allow form submission
+                }
+      }
+
+
+    // PAN Checking
+    const pan = document.getElementById('pan');
+    const panError = document.getElementById('panError');
+
+    pan.onkeyup = function () {
+                
+                const panregex = /^[A-Z]{5}\d{4}[A-Z]$/;
+
+                if (!pan.value.match(panregex)) {
+                  pan.classList.add('error');
+                  pan.classList.remove('success');
+                  panError.style.display = 'block';
+                  isValid = false;  // Prevent form submission
+                } else {
+                  pan.classList.remove('error');
+                  pan.classList.add('success');
+                  panError.style.display = 'none';
+                  isValid = true;  // Allow form submission
+                }
+      }
+
+      //Submit action
+
+      document.getElementById('signupForm').addEventListener('submit',async function(e) {
+      e.preventDefault();
+  
+      // DOB 
+      const dob = document.getElementById('dob');
+      const dobError = document.getElementById('dobError');
+  
+
+      // Calculate the difference in days between the current date and DOB
+      const currentDate = new Date();
+      const dobDate = new Date(dob.value);
+      const diffInTime = currentDate.getTime() - dobDate.getTime();
+      const days = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
+
+
+      // Gender 
+      const gen = document.getElementById('gen');
+      const genError = document.getElementById('genError');
+
+      // Education 
+      const edu = document.getElementById('edu');
+      
+      //Occupation
+      var ocp=document.getElementById('ocp');
+    
+      // Password Getting
+      const pass = document.getElementById('pass');
+
+      // PAN Getting
+      const pan = document.getElementById('pan');
+
+      //Image validation
+      const imgInput = document.getElementById('img');  // Reference to the input element
+      const img = imgInput.files[0];  // The selected image file
+      const imgError = document.getElementById('imgError');
+
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      let imgsize=0;
+      let imgen='';
+
+      if (!img || !allowedTypes.includes(img.type) || imgsize > maxSize) {
+        imgInput.classList.add('error');  // Add the error class to the input element
+        imgError.style.display = 'block';
+        isValid = false;
+      } else {
+        imgInput.classList.remove('error');  
+        imgInput.classList.add('success');
+        imgError.style.display = 'none';
+        imgsize = Math.round(img.size/1024); 
+        imgen=await convert(img);
+      }
+      
+      // If all validations pass
+      if (isValid) {
+        // Store the form data in the array
+        storedData.push({
+            id:id,
+          name: name.value.trim(),
+          email: email.value.trim(),
+          phone: phone.value.trim(),
+          dob: dob.value.trim(),
+          days: days,
+          gen: gen.value.trim(),
+          ocp:ocp.value,
+          user:user.value.trim(),
+          pass:pass.value.trim(),
+          pan:pan.value.trim(),
+          edu:edu.value.trim(),
+          imgen:imgen,
+          imgsize:imgsize
+        });
+        localStorage.setItem('storedData', JSON.stringify(storedData));
+  
+        document.getElementById('successMsg').style.display = 'block';
+
+        id=id+1;
+
+        // Reset form fields
+        name.value = '';
+        email.value = '';
+        phone.value = '';
+        dob.value = '';
+        gen.value='';
+        ocp.value='';
+        user.value='';
+        pass.value='';
+        pan.value='';
+        edu.value='';
+        imgInput.value = ''; 
+  
+        name.classList.remove('success');
+        email.classList.remove('success');
+        phone.classList.remove('success');
+        dob.classList.remove('success');
+        user.classList.remove('success');
+        pass.classList.remove('success');
+        pan.classList.remove('success');
+        edu.classList.remove('success');
+      } else {
+        document.getElementById('successMsg').style.display = 'none';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    let storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+    id = storedData.length > 0 ? storedData[storedData.length - 1].id + 1 : 1;
+});
+
+  
+    //Show all Functionality
+    document.getElementById('showDataBtn').addEventListener('click', function() {
+      let storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+      displayTableData(storedData);
+    });
+
+    
+
+    // Search Functionality
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      let storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+      let filteredData = [];
+
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+
+      if (searchTerm === '') {
+        searchInput.classList.add('error'); 
+        return;
+      } else {
+        searchInput.classList.remove('error'); 
+      }
+
+
+      const isNumeric = !isNaN(searchTerm) && searchTerm !== '';
+
+      if (isNumeric) {
+        const numValue = parseInt(searchTerm);
+        if (numValue >= 1 && numValue <= 2048) {
+          filteredData = storedData.filter(entry => entry.imgsize === numValue);
+        } 
+        else if (numValue > 2048) {
+          filteredData = storedData.filter(entry => entry.days === numValue);
+        }
+      } 
+      else {
+        filteredData = storedData.filter(entry => entry.user.toLowerCase() === searchTerm);
+      }
+
+      // Display the filtered data
+      displayTableData(filteredData);
+    });
+
+
+    //Function def for Table
+    function displayTableData(data) {
+      const tableContainer = document.getElementById('tableContainer');
+      const dataTableBody = document.querySelector('#dataTable tbody');
+
+      // Clear existing table rows
+      dataTableBody.innerHTML = '';
+
+      // Populate table rows with the given data
+      data.forEach((entry) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>${entry.id}</td>
+          <td>${entry.name}</td>
+          <td>${entry.email}</td>
+          <td>${entry.phone}</td>
+          <td>${entry.dob}</td>
+          <td>${entry.days} days</td>
+          <td>${entry.gen}</td>
+          <td>${entry.edu}</td>
+          <td>${entry.ocp}</td>
+          <td>${entry.user}</td>
+          <td>${entry.pass}</td>
+          <td>${entry.pan}</td>
+          <td><img src="${entry.imgen}" width="50"></td>
+          <td>${entry.imgsize} KB</td>
+        `;
+        dataTableBody.appendChild(row);
+      });
+
+      // Show the table container
+      tableContainer.style.display = data.length > 0 ? 'block' : 'none';
+    }
+
+    //Funtion def for convert
+    function convert(img){
+      return new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.readAsDataURL(img);
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=(error)=>reject(error);
+        console.log("Converted");
+      });
+    }
+  </script>  
+
+</body>
+</html>
